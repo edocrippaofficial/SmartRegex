@@ -12,7 +12,7 @@ usage: SmartRegex.jar [-disablehom] [-f <file>] [-h] [-homperc <float [0,1]>]
 
 Use `SmartRegex -h` to see all the options
 
-The file passed with the set of string must have this syntax for each line:
+The file passed with the set of strings must have this syntax for each line:
 ```
 one string
 space
