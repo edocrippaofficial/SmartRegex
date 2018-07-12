@@ -46,7 +46,7 @@ public class MultiHyperScanEngine extends MultiThreadV2Engine {
         mutBarrierStart = new CyclicBarrier(N_PARENTS + 1);
         mutBarrierEnd = new CyclicBarrier(N_PARENTS + 1);
         for (int i = 0; i < N_PARENTS; i++) {
-            mutThreads[i] = new MutationThread(offspring, hyperOffspring, USE_HOM, N_HOM_THREADS, HOM_PERC, mutBarrierStart, mutBarrierEnd);
+            mutThreads[i] = new MutationThread(offspring, hyperOffspring, USE_HOM, N_HOM_THREADS, HOM_PERCENTAGE, mutBarrierStart, mutBarrierEnd);
             new Thread(mutThreads[i]).start();
         }
         HyperScanThread[] hyperThreads = new HyperScanThread[N_STRINGS];
@@ -57,7 +57,7 @@ public class MultiHyperScanEngine extends MultiThreadV2Engine {
             new Thread(hyperThreads[i]).start();
         }
         double[] profData = new double[2];
-        for (int i = 0; i < N_ITER; i++) {
+        for (int i = 0; i < MAX_ITERATIONS; i++) {
             System.out.println("******************************** MT-Hyper Iteration " + (i+1) + " ********************************");
             Long time1 = System.nanoTime();
             selectParents();

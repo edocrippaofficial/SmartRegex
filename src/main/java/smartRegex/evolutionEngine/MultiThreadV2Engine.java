@@ -26,11 +26,11 @@ public class MultiThreadV2Engine extends EvolutionEngine {
         mutBarrierStart = new CyclicBarrier(N_PARENTS + 1);
         mutBarrierEnd = new CyclicBarrier(N_PARENTS + 1);
         for (int i = 0; i < N_PARENTS; i++) {
-            mutThreads[i] = new MutationThread(offspring, USE_HOM, N_HOM_THREADS, HOM_PERC, mutBarrierStart, mutBarrierEnd);
+            mutThreads[i] = new MutationThread(offspring, USE_HOM, N_HOM_THREADS, HOM_PERCENTAGE, mutBarrierStart, mutBarrierEnd);
             new Thread(mutThreads[i]).start();
         }
         double[] profData = new double[2];
-        for (int i = 0; i < N_ITER; i++) {
+        for (int i = 0; i < MAX_ITERATIONS; i++) {
             System.out.println("******************************** MT-v2 Iteration " + (i+1) + " ********************************");
             Long time1 = System.nanoTime();
             selectParents();
@@ -79,6 +79,7 @@ public class MultiThreadV2Engine extends EvolutionEngine {
     void selectParents() {
         super.selectParents();
         for (int i = 0; i < mutThreads.length; i++) {
+            // Giving all threads their own regex
             mutThreads[i].regex = parents.get(i).regex;
         }
     }

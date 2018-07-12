@@ -15,8 +15,8 @@ public abstract class EvolutionEngine {
     private String REGEX_ORACLE, REGEX_UNIVERSE, REGEX_START;
     private int MAX_INFINITE;
     private int N_POP;
-    int N_ITER, N_PARENTS, N_STRINGS;
-    float HOM_PERC;
+    int MAX_ITERATIONS, N_PARENTS, N_STRINGS;
+    float HOM_PERCENTAGE;
     boolean USE_HOM, SPECIALIZE;
     FailureResidualIndex fri;
     List<RegexCandidate> pop, parents, offspring;
@@ -24,10 +24,10 @@ public abstract class EvolutionEngine {
     public static List<LabeledString> strings = new ArrayList<>();
 
     EvolutionEngine() {
-        HOM_PERC = MainClass.HOM_PERC;
+        HOM_PERCENTAGE = MainClass.HOM_PERC;
         USE_HOM = MainClass.USE_HOM;
         N_POP = MainClass.N_POP;
-        N_ITER = MainClass.N_ITER;
+        MAX_ITERATIONS = MainClass.N_ITER;
         N_PARENTS = MainClass.N_PARENTS;
         N_STRINGS = MainClass.N_STRINGS;
         REGEX_ORACLE = MainClass.REGEX_ORACLE;
@@ -49,6 +49,7 @@ public abstract class EvolutionEngine {
     public abstract double[] run();
 
     private void initializeTestStrings() {
+        // Generating string from the given regexps
         RegExp rU = new RegExp(REGEX_UNIVERSE);
         RegExp rO = new RegExp(REGEX_ORACLE);
         Automaton aO = rO.toAutomaton();
@@ -72,9 +73,8 @@ public abstract class EvolutionEngine {
     }
 
     void selectParents() {
-        //Each individual has a range proportional to the fit and is chosen as the parent if the random falls in its range.
-        //The number of parents is fixed.
-        //Each individual can only be chosen once
+        // Each individual has a range proportional to the fit and is chosen as the parent if the random falls in its range.
+        // The number of parents is fixed, each individual can only be chosen once
         double sum = 0;
         for (RegexCandidate r: pop) {
             sum += r.fitness;
@@ -131,41 +131,47 @@ public abstract class EvolutionEngine {
     }
 
     void specializeFinalRegex(){
+        // If the regex contains {n, n} all the combinations are tested and the best one is chosen
         pop.sort(Comparator.comparingDouble(r3 -> r3.fitness));
         String best = pop.get(pop.size() - 1).regex.toString();
-        String lira = best.replace("{", "£").replace("}", "£").replace(",", "£");
-        String[] pz = lira.split("£");
-        ArrayList<Integer> pzBuoooni = new ArrayList<>();
+        if (!best.contains("{")) {
+            throw new RuntimeException("Cannot specialize regex: no variable occurrences found!");
+        }
+        // Getting all the n in the regex
+        String[] pz = best.replace("{", "£").replace("}", "£").replace(",", "£").split("£");
+        ArrayList<Integer> occurrences = new ArrayList<>();
         for (String s: pz) {
             if (s.length() == 1) {
                 try {
-                    pzBuoooni.add(Integer.parseInt(s));
+                    occurrences.add(Integer.parseInt(s));
                 } catch (NumberFormatException ignored){}
             }
         }
-        int nClass = pzBuoooni.size() / 2;
+        int nClass = occurrences.size() / 2;
         StringBuilder sb = new StringBuilder();
         String[] classes = new String[nClass];
         for (int i = 0; i < nClass; i++) {
-            int nStart = pzBuoooni.get(i*2);
-            int nEnd = pzBuoooni.get(i*2+1);
+            int nStart = occurrences.get(i*2);
+            int nEnd = occurrences.get(i*2+1);
             classes[i] = "\\{" + nStart + "," + nEnd + "}";
             sb.append("[").append(nStart).append("-").append(nEnd).append("]");
         }
+        // Generating all the possible combinations
         Generex gen = new Generex(sb.toString());
-        List<String> ss = gen.getAllMatchedStrings();
-        ArrayList<RegexCandidate> regexes = new ArrayList<>();
-        for (String s: ss) {
+        List<String> combinations = gen.getAllMatchedStrings();
+        ArrayList<RegexCandidate> regexps = new ArrayList<>();
+        for (String s: combinations) {
             RegexCandidate r = new RegexCandidate(replaceBraces(s, best, classes));
-            regexes.add(r);
+            regexps.add(r);
         }
-        regexes.sort(Comparator.comparingDouble(r -> r.fitness));
-        fri.computeRatio(regexes.get(regexes.size()-1).regex);
-        MainClass.finalRegex = regexes.get(regexes.size()-1);
+        regexps.sort(Comparator.comparingDouble(r -> r.fitness));
+        fri.computeRatio(regexps.get(regexps.size()-1).regex);
+        MainClass.finalRegex = regexps.get(regexps.size()-1);
         MainClass.finalFri = fri.numFinalFaults;
     }
 
     private String replaceBraces(String replacing, String regex, String[] replaced) {
+        // Replacing {n, n} with all possible combinations
         for (int i = 0; i < replaced.length; i++) {
             regex = regex.replaceFirst(replaced[i], "{" + replacing.charAt(i) + "}");
         }

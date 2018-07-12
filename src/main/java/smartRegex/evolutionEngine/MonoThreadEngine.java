@@ -14,7 +14,7 @@ public class MonoThreadEngine extends EvolutionEngine {
     @Override
     public double[] run() {
         double[] profData = new double[2];
-        for (int i = 0; i < N_ITER; i++) {
+        for (int i = 0; i < MAX_ITERATIONS; i++) {
             System.out.println("******************************** ST Iteration " + (i+1) + " ********************************");
             Long time1 = System.nanoTime();
             selectParents();
@@ -64,7 +64,7 @@ public class MonoThreadEngine extends EvolutionEngine {
         }
         if (USE_HOM) {
             int size = offspring.size();
-            int n = (int) (size * HOM_PERC);
+            int n = (int) (size * HOM_PERCENTAGE);
             int totalRegexAssigned = 0;
             ArrayList<Integer> chosen = new ArrayList<>();
             while (totalRegexAssigned < n) {

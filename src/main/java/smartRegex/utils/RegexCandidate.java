@@ -30,12 +30,14 @@ public class RegexCandidate {
                 fit++;
         }
         fitness = fit / EvolutionEngine.strings.size();
+        // Penalizing the regex that contains the or | character because they can be very long
         int count = regex.toString().length() - regex.toString().replace("|", "").length();
         fitness -= 0.04 * count;
 
     }
 
     public void normalizeFitness(double max) {
+        // Function that normalizes the fitness between 0 and 1 bounds. Used only for hyperScan
         fitness /= max;
         int count = regex.toString().length() - regex.toString().replace("|", "").length();
         fitness -= 0.04 * count;

@@ -11,9 +11,6 @@ import java.util.*;
 import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CyclicBarrier;
 
-    //A threads for each parent are executed at the beginning and go to sleep while
-    // the main thread does the calculations for the next generation
-
 public class MutationThread implements Runnable {
 
     public RegExp regex;
@@ -26,7 +23,7 @@ public class MutationThread implements Runnable {
     private SplittableRandom rnd;
     private boolean USE_HOM;
     private int N_HOM_THREADS;
-    private float HOM_PERC;
+    private float HOM_PERCENTAGE;
     private CyclicBarrier mutBarrierStart, mutBarrierEnd;
 
     private class HomThread implements Runnable {
@@ -35,6 +32,9 @@ public class MutationThread implements Runnable {
 
         @Override
         public void run() {
+            // HomThread are inner threads that calculate the second order mutation. While the parent thread
+            // synchronizes with the main thread with start barrier and end barrier, this one synchronizes
+            // with the parent thread with hom barriers
             while (!MultiThreadV2Engine.finish) {
                 try {
                     homBarrierStart.await();
@@ -42,16 +42,19 @@ public class MutationThread implements Runnable {
                 if (MultiThreadV2Engine.finish) {
                     return;
                 }
-                for (RegExp r : regex) {
-                    RegExp regMutata;
+                for (RegExp r: regex) {
+                    RegExp mutated;
                     Iterator<RegexMutator.MutatedRegExp> it = AllMutators.mutator.mutate(r);
                     while (it.hasNext()) {
-                        regMutata = it.next().mutatedRexExp;
-                        String s = regMutata.toString();
+                        mutated = it.next().mutatedRexExp;
+                        String s = mutated.toString();
                         if (!s.contains("~")) {
+                            // for hyper scan we have ensure that no regex matches an empty string, so the ones containing
+                            // ^ or {0, or * or ? are refused. There are no problems in the other cases (no hyper scan)
                             if (!hyperScan || (!s.contains("^") && !s.contains("{0,") && !s.contains("*") && !s.contains("?"))) {
-                                RegexCandidate c = new RegexCandidate(regMutata);
+                                RegexCandidate c = new RegexCandidate(mutated);
                                 if (hyperScan) {
+                                    // hyperScan uses it own fitness calculation, removing the backslash too
                                     String regex = c.regex.toString().replace("\\", "");
                                     hyperOffspring.add(new Expression(regex, EnumSet.of(ExpressionFlag.SOM_LEFTMOST)));
                                 } else {
@@ -73,13 +76,13 @@ public class MutationThread implements Runnable {
         }
     }
 
-    public MutationThread(List<RegexCandidate> offspring, boolean USE_HOM, int N_HOM_THREADS, float HOM_PERC, CyclicBarrier mutBarrierStart, CyclicBarrier mutBarrierEnd) {
+    public MutationThread(List<RegexCandidate> offspring, boolean USE_HOM, int N_HOM_THREADS, float HOM_PERCENTAGE, CyclicBarrier mutBarrierStart, CyclicBarrier mutBarrierEnd) {
         this.mutatedRegex = new ArrayList<>();
         this.offspring = offspring;
         this.rnd = new SplittableRandom();
         this.USE_HOM = USE_HOM;
         this.N_HOM_THREADS = N_HOM_THREADS;
-        this.HOM_PERC = HOM_PERC;
+        this.HOM_PERCENTAGE = HOM_PERCENTAGE;
         this.mutBarrierStart = mutBarrierStart;
         this.mutBarrierEnd = mutBarrierEnd;
         if (USE_HOM) {
@@ -93,8 +96,8 @@ public class MutationThread implements Runnable {
         }
     }
 
-    public MutationThread(List<RegexCandidate> offspring, List<Expression> hyperOffspring, boolean USE_HOM, int N_HOM_THREADS, float HOM_PERC, CyclicBarrier mutBarrierStart, CyclicBarrier mutBarrierEnd) {
-        this(offspring, USE_HOM, N_HOM_THREADS, HOM_PERC, mutBarrierStart, mutBarrierEnd);
+    public MutationThread(List<RegexCandidate> offspring, List<Expression> hyperOffspring, boolean USE_HOM, int N_HOM_THREADS, float HOM_PERCENTAGE, CyclicBarrier mutBarrierStart, CyclicBarrier mutBarrierEnd) {
+        this(offspring, USE_HOM, N_HOM_THREADS, HOM_PERCENTAGE, mutBarrierStart, mutBarrierEnd);
         this.hyperOffspring = hyperOffspring;
         this.hyperScan = true;
     }
@@ -124,14 +127,14 @@ public class MutationThread implements Runnable {
     }
 
     private void mutation() {
-        RegExp regMutata;
+        RegExp mutated;
         Iterator<RegexMutator.MutatedRegExp> it = AllMutators.mutator.mutate(regex);
         while (it.hasNext()) {
-            regMutata = it.next().mutatedRexExp;
-            String s = regMutata.toString();
+            mutated = it.next().mutatedRexExp;
+            String s = mutated.toString();
             if (!s.contains("~")) {
                 if (!hyperScan || (!s.contains("^") && !s.contains("{0,") && !s.contains("*") && !s.contains("?"))) {
-                    RegexCandidate c = new RegexCandidate(regMutata);
+                    RegexCandidate c = new RegexCandidate(mutated);
                     if (hyperScan) {
                         String regex = c.regex.toString().replace("\\", "");
                         hyperOffspring.add(new Expression(regex, EnumSet.of(ExpressionFlag.SOM_LEFTMOST)));
@@ -145,7 +148,7 @@ public class MutationThread implements Runnable {
         }
         if (USE_HOM) {
             int size = mutatedRegex.size();
-            int n = (int) (size * HOM_PERC);
+            int n = (int) (size * HOM_PERCENTAGE);
             int nRegexAssigned = 0;
             int homThreadIndex = 0;
             ArrayList<Integer> chosen = new ArrayList<>();
