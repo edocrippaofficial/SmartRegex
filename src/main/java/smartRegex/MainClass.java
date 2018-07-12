@@ -1,6 +1,6 @@
 package smartRegex;
 
-import jdk.nashorn.internal.runtime.ParserException;
+
 import org.apache.commons.cli.*;
 import regex.operators.AllMutators;
 import smartRegex.evolutionEngine.*;
@@ -233,7 +233,7 @@ public class MainClass {
                 String line = s.nextLine();
                 String[] lsplit = line.split(" ");
                 if (lsplit.length != 2 || !(lsplit[1].equals("C") || lsplit[1].equals("W")))
-                    throw new ParserException("" + currentLine);
+                    throw new Exception("" + currentLine);
                 boolean correct = lsplit[1].equals("C");
                 strings.add(new LabeledString(lsplit[0], correct));
                 currentLine++;
@@ -242,7 +242,7 @@ public class MainClass {
         } catch (FileNotFoundException e) {
             System.out.println("File not found!");
             System.exit(1);
-        } catch (ParserException l){
+        } catch (Exception l){
             System.out.println("Error reading the file at line " + l.getMessage());
             System.exit(1);
         }

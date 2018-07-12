@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<eclipse-userlibraries>
+  <library name="Gradle: com.github.mifmif:generex:1.0.2">
+    <archive path="C:/Users/edoar/.gradle/caches/modules-2/files-2.1/com.github.mifmif/generex/1.0.2/b378f873b4e8d7616c3d920e2132cb1c87679600/generex-1.0.2.jar" />
+  </library>
+  <library name="Gradle: com.google.collections:google-collections:1.0">
+    <archive path="C:/Users/edoar/.gradle/caches/modules-2/files-2.1/com.google.collections/google-collections/1.0/9ffe71ac6dcab6bc03ea13f5c2e7b2804e69b357/google-collections-1.0.jar" />
+  </library>
+  <library name="Gradle: commons-cli:commons-cli:1.4">
+    <archive path="C:/Users/edoar/.gradle/caches/modules-2/files-2.1/commons-cli/commons-cli/1.4/c51c00206bb913cd8612b24abd9fa98ae89719b1/commons-cli-1.4.jar" />
+  </library>
+  <library name="Gradle: dk.brics.automaton:automaton:1.11-8">
+    <archive path="C:/Users/edoar/.gradle/caches/modules-2/files-2.1/dk.brics.automaton/automaton/1.11-8/6ebfa65eb431ff4b715a23be7a750cbc4cc96d0f/automaton-1.11-8.jar" />
+  </library>
+  <library name="Gradle: junit:junit:4.12">
+    <archive path="C:/Users/edoar/.gradle/caches/modules-2/files-2.1/junit/junit/4.12/2973d150c0dc1fefe998f834810d68f278ea58ec/junit-4.12.jar" />
+  </library>
+  <library name="Gradle: net.java.dev.jna:jna:4.4.0">
+    <archive path="C:/Users/edoar/.gradle/caches/modules-2/files-2.1/net.java.dev.jna/jna/4.4.0/cb208278274bf12ebdb56c61bd7407e6f774d65a/jna-4.4.0.jar" />
+  </library>
+  <library name="Gradle: org.hamcrest:hamcrest-core:1.3">
+    <archive path="C:/Users/edoar/.gradle/caches/modules-2/files-2.1/org.hamcrest/hamcrest-core/1.3/42a25dc3219429f0e5d060061f71acb49bf010a0/hamcrest-core-1.3.jar" />
+  </library>
+  <library name="Gradle: org.junit.jupiter:junit-jupiter-api:5.0.0-M6">
+    <archive path="C:/Users/edoar/.gradle/caches/modules-2/files-2.1/org.junit.jupiter/junit-jupiter-api/5.0.0-M6/d5845b87787a935ae41cef4f738ee1b0f948d864/junit-jupiter-api-5.0.0-M6.jar" />
+  </library>
+  <library name="Gradle: org.junit.jupiter:junit-jupiter-engine:5.0.0-M6">
+    <archive path="C:/Users/edoar/.gradle/caches/modules-2/files-2.1/org.junit.jupiter/junit-jupiter-engine/5.0.0-M6/ed587395f817b7c6a28b4745b6c2f23a90e75ec6/junit-jupiter-engine-5.0.0-M6.jar" />
+  </library>
+  <library name="Gradle: org.junit.platform:junit-platform-commons:1.0.0-M6">
+    <archive path="C:/Users/edoar/.gradle/caches/modules-2/files-2.1/org.junit.platform/junit-platform-commons/1.0.0-M6/8f6d78c9e74974407bbbd4e9c64828b32d0c33e7/junit-platform-commons-1.0.0-M6.jar" />
+  </library>
+  <library name="Gradle: org.junit.platform:junit-platform-engine:1.0.0-M6">
+    <archive path="C:/Users/edoar/.gradle/caches/modules-2/files-2.1/org.junit.platform/junit-platform-engine/1.0.0-M6/7f23112c003fb688d197619d28f5b86e632751c2/junit-platform-engine-1.0.0-M6.jar" />
+  </library>
+  <library name="Gradle: org.opentest4j:opentest4j:1.0.0-M3">
+    <archive path="C:/Users/edoar/.gradle/caches/modules-2/files-2.1/org.opentest4j/opentest4j/1.0.0-M3/3e2eaab0d26974e4006c9134ae15b1ba17c33f1/opentest4j-1.0.0-M3.jar" />
+  </library>
+  <library name="Gradle: org.uncommons.maths:uncommons-maths:1.2.1">
+    <archive path="C:/Users/edoar/.gradle/caches/modules-2/files-2.1/org.uncommons.maths/uncommons-maths/1.2.1/cc1d4ec8abf49e86080670d062575f43009f7d82/uncommons-maths-1.2.1.jar" />
+  </library>
+  <library name="Gradle: org.uncommons.watchmaker:watchmaker-framework:0.7.1">
+    <archive path="C:/Users/edoar/.gradle/caches/modules-2/files-2.1/org.uncommons.watchmaker/watchmaker-framework/0.7.1/5e8b088427e972bdf4b5649a2d2dd39ed27197f2/watchmaker-framework-0.7.1.jar" />
+  </library>
+</eclipse-userlibraries>
+
