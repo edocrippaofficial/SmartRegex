@@ -31,7 +31,7 @@ public class AllMutators extends RegexMutator {
 		add(CharacterClassAddition.mutator);
 		add(CharacterClassModification.mutator);
 		add(RangeModification.mutator);
-		add(RangeModificationNew.mutator);
+		add(RangeModificationRandom.mutator);
 		add(CharacterClassRestriction.mutator);
 		add(PrefixAddition.mutator);
 		add(CharacterClassNegation.mutator);
