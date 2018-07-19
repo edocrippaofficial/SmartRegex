@@ -24,17 +24,13 @@ public class MultiHyperScanEngine extends MultiThreadV2Engine {
         super();
         hyperOffspring = new LinkedList<>();
         hyperOffspring = Collections.synchronizedList(hyperOffspring);
-        int maxLength = 0;
         for (LabeledString l: EvolutionEngine.strings) {
-            if (l.accepted && l.string.length() > maxLength) {
-                maxLength = l.string.length();
+            if (l.accepted) {
+                for (int i = 1; i <= l.string.length(); i++) {
+                    MAX_FIT += i * i;
+                }
             }
         }
-        double maxFit = 0;
-        for (int i = 1; i <= maxLength; i++) {
-            maxFit += i * i;
-        }
-        MAX_FIT = maxFit * EvolutionEngine.strings.size() / 2;
         for (RegexCandidate r: pop) {
             r.normalizeFitness(5);
         }
