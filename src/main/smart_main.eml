@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component LANGUAGE_LEVEL="JDK_1_8" inheritJdk="true">
+	<exclude-output/>
+	<contentEntry url="file://$MODULE_DIR$/../../src/main"/>
+	<lib name="TearRex.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/libs/TearRex.jar!/"/>
+	</lib>
+	<levels>
+		<level name="Gradle: com.github.mifmif:generex:1.0.2" value="project"/>
+		<level name="Gradle: org.uncommons.watchmaker:watchmaker-framework:0.7.1" value="project"/>
+		<level name="Gradle: net.java.dev.jna:jna:4.4.0" value="project"/>
+		<level name="Gradle: commons-cli:commons-cli:1.4" value="project"/>
+		<level name="Gradle: dk.brics.automaton:automaton:1.11-8" value="project"/>
+		<level name="Gradle: org.uncommons.maths:uncommons-maths:1.2.1" value="project"/>
+		<level name="Gradle: com.google.collections:google-collections:1.0" value="project"/>
+	</levels>
+</component>
