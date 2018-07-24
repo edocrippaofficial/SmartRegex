@@ -18,4 +18,4 @@ one string
 space
 the capital letter C or W (meaning correct or wrong)
 ```
-See stringSet_example.txt 
+See StringSetExamples for more details
