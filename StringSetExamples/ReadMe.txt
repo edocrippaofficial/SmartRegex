@@ -1,7 +1,7 @@
 Generic usage: java -jar SmartRegex.jar -f *absolute path to the file* -rS *starting regex*
 
-Please note that this program is not generating the regex from scratch, so the starting regex should be something like [a-z]+ in case of alphanumeric regex.
-If you are using generic characters along with classes, please include them in your starting regex. Some shell will accept this special characters preceded by 2 \, others by only 1. In the examples below are listed the two version for this cases. Choose the one right for your shell.
+Please note that this program is not generating the regex from scratch, so the starting regex should be something like [a-z]+  in case of alphanumeric regex.
+If you are using generic characters along with classes, please include them in your starting regex. Some shell will accept this special  characters preceded by 2 \, others by only 1.  In the examples below are listed the two version for this cases. Choose the one right for your shell.
 
 Examples:
 - Alphanumeric
