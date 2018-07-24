@@ -5,7 +5,7 @@ like [a-z]+ in case of alphanumeric regex.
 
 If you are using generic characters along with classes, please include them in your starting regex.
 Some shell will accept this special characters preceded by 2 \, others by only 1.
-In the examples below are listed the two version for this cases. Choose the one right for your shell.
+The following examples list the two versions for this case. Choose the right one for your shell.
 
 Examples:
 - Alphanumeric
