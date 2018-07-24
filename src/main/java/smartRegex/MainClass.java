@@ -20,7 +20,7 @@ public class MainClass {
     public static float HOM_PERC = 0.2f;
     public static boolean USE_HOM = true;
     public static int N_POP = 50;
-    public static int N_ITER = 10;
+    public static int N_ITER = 20;
     public static int N_PARENTS = 25;
     public static int N_STRINGS = 100;
     public final static int N_HOM_THREADS = 5;
@@ -29,9 +29,9 @@ public class MainClass {
 
     public static int MAX_INFINITE = 5;
 
-    public static String REGEX_ORACLE = "[i-z][0-4]";
-    public static String REGEX_UNIVERSE = "[a-z][0-9]";
-    public static String REGEX_START = "[3-6]+";
+    public static String REGEX_ORACLE = "[A-Z]{2}[0-9]{3}[A-Z]{2}";
+    public static String REGEX_UNIVERSE = "[a-zA-Z0-9]{7}";
+    public static String REGEX_START = "[a-z]+";
 
     public static RegexCandidate finalRegex;
     public static double finalFri;
