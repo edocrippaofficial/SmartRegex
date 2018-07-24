@@ -1,6 +1,5 @@
 package smartRegex;
 
-
 import jdk.nashorn.internal.runtime.ParserException;
 import org.apache.commons.cli.*;
 import regex.operators.AllMutators;
@@ -16,14 +15,14 @@ import java.util.Scanner;
 
 public class MainClass {
 
-    private static ExecutionMode mode = ExecutionMode.MULTI_THREAD_HYPER_SCAN;
+    private static ExecutionMode mode = ExecutionMode.MULTI_THREAD_V2;
     public static boolean useFile = false;
     public static float HOM_PERC = 0.2f;
     public static boolean USE_HOM = true;
-    public static int N_POP = 5;
-    public static int N_ITER = 20;
-    public static int N_PARENTS = 2;
-    public static int N_STRINGS = 1000;
+    public static int N_POP = 50;
+    public static int N_ITER = 10;
+    public static int N_PARENTS = 25;
+    public static int N_STRINGS = 100;
     public final static int N_HOM_THREADS = 5;
 
     public static boolean SPECIALIZE = true;
@@ -47,10 +46,9 @@ public class MainClass {
     }
 
     public static void main(String[] args) {
-
         cmdParser(args);
 
-        AllMutators.enableOnly(new String[]{"CC", "RMR", "CCA", "QC", "PA", "CCR"});
+        AllMutators.enableOnly(new String[]{"CA", "CC", "RMR", "CCA", "QC", "PA", "CCR"});
         EvolutionEngine engine;
         switch (mode) {
             case MONO_THREAD:
@@ -74,13 +72,17 @@ public class MainClass {
 
         System.out.println("\n\n\n~*~*~*~*~*~*~*~*~" + mode.toString() + "~*~*~*~*~*~*~*~*~\n");
         System.out.println("   --- RESULTS ---   \n");
-        System.out.println("BEST REGEX FOUND: " + finalRegex.regex.toString() +
-                "\n                  whit fitness " + finalRegex.fitness +
-                "\n                  and failure residual index " + finalFri);
+        if (useFile) {
+            System.out.println("BEST REGEX FOUND: " + finalRegex.regex.toString() +
+                    "\n                  with fitness " + finalRegex.fitness);
+        } else {
+            System.out.println("BEST REGEX FOUND: " + finalRegex.regex.toString() +
+                    "\n                  with fitness " + finalRegex.fitness +
+                    "\n                  and failure residual index " + finalFri);
+        }
         System.out.println("TOTAL TIME: " + (int) profData[0] + "ms");
         System.out.println("N. OFFSPRING : " + (int) profData[1]);
         System.out.println("MILLIS/OFFSPRING: " + profData[0] / profData[1]);
-
 
     }
 

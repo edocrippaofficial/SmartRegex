@@ -35,14 +35,15 @@ public abstract class EvolutionEngine {
         REGEX_START = MainClass.REGEX_START;
         MAX_INFINITE = MainClass.MAX_INFINITE;
         SPECIALIZE = MainClass.SPECIALIZE;
-        fri = new FailureResidualIndex(new RegExp(REGEX_ORACLE), new RegExp(REGEX_START));
         pop = new ArrayList<>();
         parents = new ArrayList<>();
         offspring = new ArrayList<>();
         if (MainClass.useFile)
             strings = MainClass.strings;
-        else
+        else {
             initializeTestStrings();
+            fri = new FailureResidualIndex(new RegExp(REGEX_ORACLE), new RegExp(REGEX_START));
+        }
         initializePop();
     }
 
@@ -165,9 +166,11 @@ public abstract class EvolutionEngine {
             regexps.add(r);
         }
         regexps.sort(Comparator.comparingDouble(r -> r.fitness));
-        fri.computeRatio(regexps.get(regexps.size()-1).regex);
         MainClass.finalRegex = regexps.get(regexps.size()-1);
-        MainClass.finalFri = fri.numFinalFaults;
+        if (fri != null) {
+            fri.computeRatio(regexps.get(regexps.size()-1).regex);
+            MainClass.finalFri = fri.numFinalFaults;
+        }
     }
 
     private String replaceBraces(String replacing, String regex, String[] replaced) {
